@@ -1,22 +1,31 @@
-// ✅ Replace with your actual API key (keep inside quotes!)
+// ✅ Replace with your actual OpenWeatherMap API key
 const apiKey = "a9213c2cb089816c195909f586fc24ef";
 
-// ✅ Fetch and display current weather + 5-day forecast
-function getWeather() {
-  const city = document.getElementById("cityInput").value || "Hyderabad";
+// 🏙️ Load default city on page start
+window.onload = function () {
+  getWeather("Hyderabad");
+};
 
-  // Current weather
+// 🌦️ Main function – fetch current weather + forecast
+function getWeather(defaultCity) {
+  const city = defaultCity || document.getElementById("cityInput").value;
+
+  if (!city) {
+    alert("Please enter a city name!");
+    return;
+  }
+
+  // --- Current Weather API Call ---
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
-      if (data.cod == "404") {
+      if (data.cod !== 200) {
         document.getElementById("weather").innerHTML = "<p>City not found!</p>";
-        document.getElementById("forecast").innerHTML = "";
         return;
       }
 
       document.getElementById("weather").innerHTML = `
-        <h2>${data.name}, ${data.sys.country}</h2>
+        <h2>${data.name}</h2>
         <p>🌡️ Temperature: ${data.main.temp}°C</p>
         <p>☁️ Weather: ${data.weather[0].description}</p>
         <p>💧 Humidity: ${data.main.humidity}%</p>
@@ -24,20 +33,20 @@ function getWeather() {
       `;
     })
     .catch(() => {
-      document.getElementById("weather").innerHTML = "<p>Error fetching data.</p>";
+      document.getElementById("weather").innerHTML = "<p>Error fetching weather data.</p>";
     });
 
-  // 5-day forecast
+  // --- 5-Day Forecast API Call ---
   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
-      const list = data.list.filter((item, index) => index % 8 === 0); // one per day
+      const list = data.list.filter((_, index) => index % 8 === 0); // 1 forecast/day
       let forecastHTML = "<h3>5-Day Forecast</h3>";
 
       list.forEach(day => {
         const date = new Date(day.dt_txt).toDateString();
         forecastHTML += `
-          <div>
+          <div class="forecast-day">
             <h4>${date}</h4>
             <p>🌡️ ${day.main.temp}°C</p>
             <p>☁️ ${day.weather[0].description}</p>
@@ -52,7 +61,7 @@ function getWeather() {
     });
 }
 
-// ✅ Simple test function
+// 🔬 Simple JS Test Function
 function celsiusToFahrenheit(c) {
   return (c * 9 / 5) + 32;
 }

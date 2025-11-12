@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>🌤️ Weather Dashboard</h1>
 
-  <div class="search-box">
-    <input type="text" id="cityInput" placeholder="Enter city name">
-    <button onclick="getWeather()">Search</button>
+  <!-- ✅ Link to CSS file -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>🌦️ Weather Dashboard</h1>
+
+    <!-- 🔍 Search box -->
+    <div class="search">
+      <input type="text" id="cityInput" placeholder="Enter city name" />
+      <button onclick="getWeather()">Search</button>
+    </div>
+
+    <!-- 🌤️ Current weather display -->
+    <div id="weather"></div>
+
+    <!-- 📅 5-day forecast display -->
+    <div id="forecast"></div>
   </div>
 
-  <div id="weather" class="weather-card"></div>
-  <div id="forecast" class="forecast-grid"></div>
-
-  <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-
-
-  <footer>
-    <p>Created by Humera Mahaveen | Web Technologies Project</p>
-  </footer>
-
+  <!-- ✅ Link to JavaScript file -->
   <script src="script.js"></script>
 </body>
 </html>
