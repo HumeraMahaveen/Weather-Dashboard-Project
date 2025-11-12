@@ -1,5 +1,17 @@
 // Replace YOUR_API_KEY with your actual OpenWeatherMap API key
 const apiKey = a9213c2cb089816c195909f586fc24ef; 
+const city = "Hyderabad";
+
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("city").innerText = data.name;
+    document.getElementById("temp").innerText = data.main.temp + "°C";
+    document.getElementById("desc").innerText = data.weather[0].description;
+  })
+  .catch(error => console.error("Error fetching weather data:", error));
 
 // Fetch and display current weather + 5-day forecast
 function getWeather() {
